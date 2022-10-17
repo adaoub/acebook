@@ -8,7 +8,6 @@ const methodOverride = require("method-override");
 
 //image stuff
 const bodyParser = require("body-parser");
-const fs = require("fs");
 const multer = require("multer");
 
 const homeRouter = require("./routes/home");
@@ -27,7 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "uploads")));
 app.use(methodOverride("_method"));
 
 app.use(
@@ -51,9 +49,10 @@ app.use((req, res, next) => {
 });
 
 //image
+this.saveToFolder = path.join(__dirname + '/public/images/');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, this.saveToFolder);
   },
   filename: (req, file, cb) => {
     cb(
@@ -68,8 +67,6 @@ const upload = multer({ storage: storage });
 ////////////
 
 app.use(bodyParser.json());
-
-// gets images from public folder
 
 // middleware function to check for logged-in users
 const sessionChecker = (req, res, next) => {

@@ -2,6 +2,7 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 const fs = require("fs");
 const path = require("path");
+const app = require("../app");
 
 const PostsController = {
   Index: (req, res) => {
@@ -30,8 +31,7 @@ const PostsController = {
     const obj = {
       img: {
         data: fs.readFileSync(
-          path.join(
-            "/Users/adaoub/Desktop/Makers-Projects/acebook/uploads/" +
+          path.join(app.saveToFolder +
               req.file.filename
           )
         ),
@@ -40,9 +40,7 @@ const PostsController = {
     };
 
     post.photo = obj.img;
-    post.code = obj.img.data.toString("base64");
-    console.log(post.photo);
-    console.log(post.photo.data.toString("base64"));
+    post.photoCode = obj.img.data.toString("base64");
     post.save((err) => {
       if (err) {
         throw err;

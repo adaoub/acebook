@@ -20,7 +20,7 @@ const PostSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    code: String,
+    photoCode: String,
   },
   { timestamps: true }
 );
